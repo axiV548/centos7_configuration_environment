@@ -1,0 +1,2 @@
+# centos7_configuration_environment
+centos7环境配置
