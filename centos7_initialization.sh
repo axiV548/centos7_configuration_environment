@@ -24,10 +24,10 @@ function yellow(){
 
 #安装python3.6
 install_py36(){
-    yum install -y openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel wget gcc
+    yum install -y openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel wget gcc automake autoconf libtool make
     mkdir -p /usr/soft/py3.6
     cd /usr/soft/py3.6
-    wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
+    wget https://cdn.npm.taobao.org/dist/python/3.6.0/Python-3.6.0.tgz
     tar -xzvf Python-3.6.0.tgz
     cd Python-3.6.0
     ./configure --prefix=/usr/local
@@ -88,7 +88,7 @@ install_jdk8u202(){
     sed -i '$aexport CLASSPATH=.:${JAVA_HOME}/jre/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar' /etc/profile
     sed -i '$aexport PATH=$PATH:${JAVA_HOME}/bin' /etc/profile
     
-    source /etc/profile
+    echo "请手动执行：source /etc/profile"
     
 }
 
@@ -102,8 +102,9 @@ install_mysql5.7(){
     yum install -y mysql-server
     systemctl start mysqld
     
-    mysql_password=$(grep 'temporary password' /var/log/mysqld.log)
-    echo mysql_password
+    mysql_password=$(grep -o 'localhost: .*' /var/log/mysqld.log)
+    echo "数据库密码为:"${mysql_password: 11}
+
 }
 
 #安装docker
